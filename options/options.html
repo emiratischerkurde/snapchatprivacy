@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="options.css" />
+    <title>Snapchat Daten-Bereiniger — Einstellungen</title>
+  </head>
+  <body>
+    <main>
+      <h1>Snapchat Daten-Bereiniger</h1>
+      <p class="lead">
+        Einstellungen für Erkennung und Ablauf. Die Standardwerte reichen meistens — die Selektoren brauchst du erst,
+        wenn Snapchat sein Web-Layout ändert und die Analyse nichts mehr findet.
+      </p>
+
+      <section class="card">
+        <h2>Erkennung</h2>
+        <label class="field">
+          <span>Dein Snapchat-Anzeigename / Username</span>
+          <input type="text" id="ownUsername" placeholder="z. B. dein_name" />
+          <em
+            >Wird genutzt, um <b>deine</b> Nachrichten von fremden zu unterscheiden. Ohne Angabe entscheidet die
+            Extension anhand der Ausrichtung im Chat (links/rechts) — das ist weniger zuverlässig.</em
+          >
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>Ablauf</h2>
+        <label class="field">
+          <span>Tempo</span>
+          <select id="speed">
+            <option value="careful">Vorsichtig — längste Pausen, am unauffälligsten</option>
+            <option value="normal">Normal</option>
+            <option value="fast">Schnell — kürzere Pausen</option>
+            <option value="turbo">Turbo — fast keine Pausen, sieht nach Automatik aus</option>
+            <option value="blitz">Blitz — praktisch keine Pausen, Aussetzer werden übersprungen</option>
+          </select>
+          <em
+            >Das Tempo kürzt nur die Pausen zwischen den Klicks. Die Wartezeiten
+            <b>auf</b> Snapchat (Aktionsleiste, Dialog) bleiben unangetastet — sie zu
+            kürzen macht den Lauf nicht schneller, sondern nur fehleranfälliger.</em
+          >
+        </label>
+        <label class="field">
+          <span>Sicherheitslimit pro Lauf (0 = kein Limit)</span>
+          <input type="number" id="maxDeletions" min="0" step="10" />
+          <em>Begrenzt, wie viele Einträge ein einzelner Durchlauf anfasst. Für den ersten Test z. B. 5.</em>
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>Diagnose <span class="tag">wenn nichts erkannt/gelöscht wird</span></h2>
+        <p class="note">
+          Öffne auf der Snapchat-Seite den betroffenen Chat, dann hier klicken. Es wird nichts gelöscht — die
+          Extension prüft nur, ob sie den Chat-Bereich findet, wie sie die letzten Nachrichten einstuft und ob sich
+          testweise ein Menü öffnen lässt. Ergebnis erscheint hier und detailliert in der Konsole des Snapchat-Tabs
+          (<b>F12 → Console</b>).
+        </p>
+        <button id="diagnose" class="btn btn--ghost" type="button">Diagnose starten</button>
+        <pre id="diagnoseOut" class="diagnose-out hidden"></pre>
+      </section>
+
+      <section class="card">
+        <h2>Selektoren <span class="tag">nur bei Problemen</span></h2>
+        <p class="note">
+          Klicke „Auswählen“ und dann auf der Snapchat-Seite das passende Element. Der Snapchat-Tab muss dafür geöffnet
+          sein. Leer lassen = Automatik.
+        </p>
+
+        <div class="picker-row">
+          <label class="field">
+            <span>Chat-Bereich (Container mit den Nachrichten)</span>
+            <input type="text" id="sel_conversation" placeholder="automatisch" />
+          </label>
+          <button class="btn btn--ghost" data-pick="conversation" type="button">Auswählen</button>
+        </div>
+
+        <div class="picker-row">
+          <label class="field">
+            <span>Einzelne Nachricht</span>
+            <input type="text" id="sel_message" placeholder="automatisch" />
+          </label>
+          <button class="btn btn--ghost" data-pick="message" type="button">Auswählen</button>
+        </div>
+
+        <div class="picker-row">
+          <label class="field">
+            <span>Kontextmenü</span>
+            <input type="text" id="sel_menu" placeholder="automatisch" />
+          </label>
+          <button class="btn btn--ghost" data-pick="menu" type="button">Auswählen</button>
+        </div>
+
+        <div class="picker-row">
+          <label class="field">
+            <span>Bestätigungsdialog</span>
+            <input type="text" id="sel_dialog" placeholder="automatisch" />
+          </label>
+          <button class="btn btn--ghost" data-pick="dialog" type="button">Auswählen</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Menü-Beschriftungen <span class="tag">nur bei anderer Sprache</span></h2>
+        <p class="note">
+          Kommagetrennt. Wird zusätzlich zu den eingebauten deutschen und englischen Begriffen geprüft.
+        </p>
+        <label class="field">
+          <span>„Löschen“ heißt bei mir</span>
+          <input type="text" id="lbl_delete" placeholder="z. B. verwijderen, elimina" />
+        </label>
+        <label class="field">
+          <span>„Nicht mehr speichern“ heißt bei mir</span>
+          <input type="text" id="lbl_unsave" placeholder="z. B. niet meer opslaan" />
+        </label>
+        <label class="field">
+          <span>Bestätigungs-Button heißt bei mir</span>
+          <input type="text" id="lbl_confirmDelete" placeholder="z. B. bevestigen" />
+        </label>
+      </section>
+
+      <div class="actions">
+        <button id="save" class="btn btn--primary" type="button">Speichern</button>
+        <button id="reset" class="btn btn--ghost" type="button">Auf Standard zurücksetzen</button>
+        <span id="status" class="status"></span>
+      </div>
+
+      <section class="card card--info">
+        <h2>Was diese Extension nicht kann</h2>
+        <ul>
+          <li>
+            <b>Fremde Nachrichten beidseitig löschen.</b> Snapchat lässt serverseitiges Löschen nur für Inhalte zu, die
+            du selbst gesendet hast. Nachrichten anderer verschwinden nur aus deiner Ansicht.
+          </li>
+          <li>
+            <b>Daten von Snapchats Servern entfernen.</b> Für eine echte DSGVO-Löschung stelle zusätzlich einen Antrag
+            über Snapchats Support/Datenschutzformular.
+          </li>
+          <li>
+            <b>Garantieren, dass nichts schiefgeht.</b> Automatisiertes Klicken kann gegen Snapchats Nutzungsbedingungen
+            verstoßen. Nutze das Sicherheitslimit und starte mit einem Testlauf.
+          </li>
+        </ul>
+      </section>
+    </main>
+    <script src="options.js"></script>
+  </body>
+</html>

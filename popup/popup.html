@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>Snapchat Daten-Bereiniger</title>
+  </head>
+  <body>
+    <header class="head">
+      <div class="head__mark"></div>
+      <div>
+        <h1>Daten-Bereiniger</h1>
+        <p class="head__sub" id="context">Prüfe Seite …</p>
+      </div>
+      <button id="openOptions" class="icon-btn" title="Einstellungen" type="button">⚙</button>
+    </header>
+
+    <div id="warning" class="notice notice--warn hidden">
+      Öffne <b>snapchat.com/web/</b> und melde dich an. Danach dieses Menü erneut öffnen.
+    </div>
+
+    <!-- Schritt 1: Auswahl -->
+    <section id="step-select" class="step">
+      <h2 class="step__title"><span class="step__num">1</span> Was soll weg?</h2>
+      <ul class="types" id="typeList"></ul>
+
+      <div class="row">
+        <label class="field">
+          <span>Umfang</span>
+          <select id="scope">
+            <option value="current">Nur geöffneter Chat</option>
+            <option value="all">Alle Chats in der Liste</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Tempo</span>
+          <select id="speed">
+            <option value="careful">Vorsichtig</option>
+            <option value="normal" selected>Normal</option>
+            <option value="fast">Schnell</option>
+            <option value="turbo">Turbo</option>
+            <option value="blitz">Blitz</option>
+          </select>
+        </label>
+      </div>
+
+      <p class="hint" id="speedHint"></p>
+
+      <label class="check">
+        <input type="checkbox" id="onlyOwn" checked />
+        <span
+          >Nur <b>meine</b> Nachrichten (beidseitige Löschung)
+          <em>Fremde Nachrichten lassen sich nur aus deiner Ansicht entfernen.</em></span
+        >
+      </label>
+
+      <button id="btnScan" class="btn btn--primary" type="button">Chat analysieren</button>
+      <p class="hint">Der Verlauf wird komplett hochgescrollt — das kann bei langen Chats dauern.</p>
+    </section>
+
+    <!-- Schritt 2: Ergebnis -->
+    <section id="step-result" class="step hidden">
+      <h2 class="step__title"><span class="step__num">2</span> Gefundene Daten</h2>
+      <p class="summary" id="summary"></p>
+      <table class="counts">
+        <thead>
+          <tr>
+            <th>Typ</th>
+            <th>Gesamt</th>
+            <th title="Grobe Schätzung – Snapchat verrät die Herkunft erst beim Überfahren der Nachricht.">Davon meine (geschätzt)</th>
+          </tr>
+        </thead>
+        <tbody id="countsBody"></tbody>
+      </table>
+      <p class="hint" id="selectionSummary"></p>
+
+      <label class="check">
+        <input type="checkbox" id="dryRun" />
+        <span>Testlauf — nur markieren, nichts löschen</span>
+      </label>
+
+      <label class="field field--full">
+        <span>Sicherheitslimit (0 = kein Limit)</span>
+        <input type="number" id="maxDeletions" min="0" step="10" value="0" />
+      </label>
+
+      <div class="confirm" id="confirmBox">
+        <label class="field field--full">
+          <span>Zum Bestätigen <b>LÖSCHEN</b> eintippen</span>
+          <input type="text" id="confirmInput" placeholder="LÖSCHEN" autocomplete="off" />
+        </label>
+      </div>
+
+      <div class="row">
+        <button id="btnBack" class="btn btn--ghost" type="button">Zurück</button>
+        <button id="btnDelete" class="btn btn--danger" type="button" disabled>Endgültig löschen</button>
+      </div>
+    </section>
+
+    <!-- Schritt 3: Lauf -->
+    <section id="step-run" class="step hidden">
+      <h2 class="step__title"><span class="step__num">3</span> Läuft …</h2>
+      <div class="progress"><div class="progress__bar" id="progressBar"></div></div>
+      <p class="summary" id="runStatus">Wird gestartet …</p>
+      <p class="hint">
+        Du kannst dieses Menü schließen — der Lauf geht weiter. Fortschritt siehst du unten rechts auf der Seite.
+        <b>Esc</b> stoppt sofort.
+      </p>
+      <button id="btnAbort" class="btn btn--danger" type="button">Stoppen</button>
+    </section>
+
+    <!-- Schritt 4: Fertig -->
+    <section id="step-done" class="step hidden">
+      <h2 class="step__title">✓ Fertig</h2>
+      <p class="summary" id="doneSummary"></p>
+      <button id="btnRestart" class="btn btn--primary" type="button">Neuer Durchlauf</button>
+    </section>
+
+    <p id="error" class="notice notice--error hidden"></p>
+
+    <!-- Typdefinitionen werden mit dem Content-Script geteilt, um Doppelpflege zu vermeiden. -->
+    <script src="../content/config.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

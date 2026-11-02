@@ -1,0 +1,109 @@
+/* Overlay-Styles. Hohe z-index-Werte, damit nichts von der App verdeckt wird. */
+
+.scdc-hud {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2147483646;
+  width: 280px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(17, 17, 20, 0.94);
+  color: #f5f5f7;
+  font: 13px/1.45 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 252, 0, 0.35);
+  display: none;
+}
+
+.scdc-hud--visible {
+  display: block;
+}
+
+.scdc-hud__bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.scdc-hud__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fffc00;
+  box-shadow: 0 0 0 0 rgba(255, 252, 0, 0.6);
+  animation: scdc-pulse 1.6s ease-out infinite;
+  flex: none;
+}
+
+@keyframes scdc-pulse {
+  70% {
+    box-shadow: 0 0 0 9px rgba(255, 252, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 252, 0, 0);
+  }
+}
+
+.scdc-hud__title {
+  flex: 1;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.scdc-hud__stop {
+  border: 0;
+  border-radius: 8px;
+  padding: 5px 9px;
+  background: #ff3b30;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.scdc-hud__stop:hover {
+  background: #ff5a50;
+}
+
+.scdc-hud__status {
+  font-size: 13px;
+  margin-bottom: 6px;
+  word-break: break-word;
+}
+
+.scdc-hud__log {
+  font-size: 11px;
+  opacity: 0.65;
+  max-height: 84px;
+  overflow: hidden;
+}
+
+/* Aktuell bearbeitete Nachricht */
+.scdc-active {
+  outline: 2px solid #ff3b30 !important;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Testlauf-Markierung */
+.scdc-marked {
+  outline: 2px dashed #fffc00 !important;
+  outline-offset: 2px;
+  background: rgba(255, 252, 0, 0.08) !important;
+  border-radius: 8px;
+}
+
+/* Selektor-Picker */
+.scdc-picker {
+  position: fixed;
+  z-index: 2147483647;
+  pointer-events: none;
+  border: 2px solid #00c2ff;
+  background: rgba(0, 194, 255, 0.14);
+  border-radius: 4px;
+  transition: all 60ms linear;
+}

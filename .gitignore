@@ -1,0 +1,5 @@
+# Privater Schluessel und Build-Artefakte - nie veroeffentlichen
+*.pem
+*.crx
+*.zip
+.DS_Store

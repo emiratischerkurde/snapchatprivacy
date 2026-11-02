@@ -1,0 +1,16 @@
+Snapchat Daten-Bereiniger - Installation (Chrome, Brave, Edge)
+
+1. Diese ZIP-Datei entpacken (Rechtsklick > Entpacken). Den Ordner danach nicht
+   mehr verschieben oder loeschen, sonst verschwindet die Erweiterung.
+2. Im Browser chrome://extensions (Brave: brave://extensions) oeffnen.
+3. Oben rechts "Entwicklermodus" einschalten.
+4. "Entpackte Erweiterung laden" klicken und den entpackten Ordner waehlen.
+5. https://www.snapchat.com/web/ oeffnen, anmelden, einmal neu laden (F5),
+   dann auf das Erweiterungs-Symbol klicken.
+
+Hinweise
+- Der Snapchat-Tab muss waehrend des Laufs im Vordergrund bleiben.
+- Probier es zuerst mit "Limit 3" an einem Chat aus.
+- Geloeschte Nachrichten sind endgueltig weg, auch beim Gegenueber.
+- Nachrichten des Gegenuebers koennen nur entspeichert, nicht geloescht werden.
+- Ausfuehrliche Beschreibung: README.md

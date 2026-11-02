@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Snapchat Daten-Bereiniger",
+  "version": "1.0.0",
+  "description": "Analysiert deine Snapchat-Web-Chats nach Datentyp (Text, Snaps, Video-/Sprachnachrichten, gespeicherte Snaps) und löscht die ausgewählten Typen gebündelt.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://snapchat.com/web/*", "https://www.snapchat.com/web/*", "https://web.snapchat.com/*"],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Snapchat Daten-Bereiniger",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://snapchat.com/web/*", "https://www.snapchat.com/web/*", "https://web.snapchat.com/*"],
+      "js": ["content/keepalive.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://snapchat.com/web/*", "https://www.snapchat.com/web/*", "https://web.snapchat.com/*"],
+      "js": [
+        "content/config.js",
+        "content/dom.js",
+        "content/scanner.js",
+        "content/deleter.js",
+        "content/hud.js",
+        "content/picker.js",
+        "content/main.js"
+      ],
+      "css": ["content/overlay.css"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ]
+}
